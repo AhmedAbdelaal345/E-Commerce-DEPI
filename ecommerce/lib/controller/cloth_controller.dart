@@ -26,7 +26,7 @@ class ClothController extends ChangeNotifier {
   void toggleSelled(ClothesModel item) {
     if (item.isInCart && !item.isSelled) {
       item.isSelled = true;
-      _selledItem.add(item); 
+      _selledItem.add(item);
       item.isInCart = false;
       _cartItems.remove(item);
       notifyListeners();
@@ -47,6 +47,13 @@ class ClothController extends ChangeNotifier {
       _cartItems.add(item);
       item.isInCart = true;
       notifyListeners();
+    }
+  }
+
+  void clear(ClothesModel item) {
+    _cartItems.clear();
+    for (var cartItem in _cartItems) {
+      cartItem.isInCart = false;
     }
   }
 

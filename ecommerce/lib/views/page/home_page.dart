@@ -10,9 +10,10 @@ import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-  static List<ClothesModel> cloth = ClothesModel.getRealClothesData();
   @override
   Widget build(BuildContext context) {
+    final clothController = Provider.of<ClothController>(context);
+    final cloth = clothController.items;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home Page'),
@@ -62,12 +63,7 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return DetailsPage(
-                                item: Provider.of<ClothController>(
-                                  context,
-                                  listen: false,
-                                ).items[index],
-                              );
+                              return DetailsPage(item: cloth[index]);
                             },
                           ),
                         );

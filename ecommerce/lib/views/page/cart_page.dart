@@ -1,8 +1,10 @@
 import 'package:ecommerce/controller/cloth_controller.dart';
+import 'package:ecommerce/helper/constants.dart';
 
 import 'package:ecommerce/views/widget/elevated_button_widget.dart';
 import 'package:ecommerce/views/widget/list_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
@@ -17,7 +19,9 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final controller = context.watch<ClothController>();
-    final cartItems = controller.cartItems.where((element) => element.isInCart).toList();
+    final cartItems = controller.cartItems
+        .where((element) => element.isInCart)
+        .toList();
     final double taxes = 5.00;
 
     return Scaffold(
@@ -37,15 +41,19 @@ class _CartPageState extends State<CartPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    size: 80,
-                    color: Colors.grey,
+                  Lottie.asset(
+                    Constants.emptyCartImage,
+                    width: 300,
+                    height: 300,
                   ),
                   SizedBox(height: 16),
                   Text(
                     'Your cart is empty',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
+                    style: TextStyle(
+                      fontSize: 25,
+                      color: Constants.scondaryTextColor,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ],
               ),
@@ -153,9 +161,13 @@ class _CartPageState extends State<CartPage> {
                             onpressed: () {
                               if (cartItems.isNotEmpty) {
                                 controller.checkout();
-                              
+
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text('Checkout successful! Items moved to Shop List.')),
+                                  SnackBar(
+                                    content: Text(
+                                      'Checkout successful! Items moved to Shop List.',
+                                    ),
+                                  ),
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(

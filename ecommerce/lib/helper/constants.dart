@@ -10,6 +10,9 @@ class Constants {
   static const String tshirtImage = "assets/images/T-shirt_image.png";
   static const String trossiresImage = "assets/images/trossires_image.png";
   static const String profileImage = "assets/images/profile_image.jpeg";
+  static const String emptyImage = "assets/lottie/empty.json";
+  static const String emptyCartImage = "assets/lottie/emptyCart.json";
+  static const String emptyWishImage = "assets/lottie/emptywishList.json";
   static const Color scondaryTextColor = Color(0xff61758A);
   static const Color primaryBackgroundColor = Color(0xffFEFEFE);
   static const Color primarySearchColor = Color(0xffF0F2F5);
