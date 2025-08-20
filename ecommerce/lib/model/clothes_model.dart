@@ -13,6 +13,8 @@ class ClothesModel {
   bool isFavorite;
   int quantity;
 
+  bool isSelled;
+
   ClothesModel({
     required this.id,
     required this.title,
@@ -24,6 +26,7 @@ class ClothesModel {
     required this.isFeatured,
     this.isInCart = false,
     this.isFavorite = false,
+    this.isSelled=false,
     this.quantity = 1,
   });
 
@@ -287,6 +290,7 @@ class ClothesModel {
             image: item['image'] as String,
             isInCart: false, // Default value
             isFavorite: false, // Default value
+            isSelled: false,
             isFeatured: (i + j) % 7 == 0, // Every 7th item is featured
             price: double.parse(
               adjustedPrice.toStringAsFixed(2),

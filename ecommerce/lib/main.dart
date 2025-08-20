@@ -1,7 +1,9 @@
 import 'package:ecommerce/controller/cloth_controller.dart';
+import 'package:ecommerce/controller/regiseter_controller.dart';
 import 'package:ecommerce/helper/constants.dart';
-import 'package:ecommerce/views/page/details_page.dart';
+
 import 'package:ecommerce/views/page/login_page.dart';
+import 'package:ecommerce/views/page/signup_page.dart';
 import 'package:ecommerce/views/page/wrapper_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,8 +18,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ClothController(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ClothController()),
+        ChangeNotifierProvider(create: (context) => RegiseterController()),
+      ],
+
       child: MaterialApp(
         title: 'E-commerce App',
         theme: ThemeData(
@@ -27,7 +33,11 @@ class MyApp extends StatelessWidget {
           ),
         ),
         home: LoginPage(),
-        routes: {WrapperPage.id: (context) => WrapperPage()},
+        routes: {
+          LoginPage.id: (context) => LoginPage(),
+          WrapperPage.id: (context) => WrapperPage(),
+          SignupPage.id: (context) => SignupPage(),
+        },
       ),
     );
   }

@@ -1,13 +1,16 @@
+import 'package:ecommerce/controller/regiseter_controller.dart';
 import 'package:ecommerce/helper/constants.dart';
+import 'package:ecommerce/views/page/signup_page.dart';
 import 'package:ecommerce/views/page/wrapper_page.dart';
 import 'package:ecommerce/views/widget/elevated_button_widget.dart';
 import 'package:ecommerce/views/widget/signup_text_widget.dart';
 import 'package:ecommerce/views/widget/text_form_field_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
-
+  static const id = "Login";
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -45,33 +48,52 @@ class _LoginPageState extends State<LoginPage> {
               ),
               TextFormFieldWidget(
                 controller: _emailController,
-                ispassword: false,
+                isPassword: false,
+                isEmail: true,
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 23),
               TextFormFieldWidget(
                 controller: _passwordController,
-                ispassword: true,
+                isPassword: true,
+                isEmail: false,
                 hintText: "Enter your Password",
                 labelText: "PassWord",
               ),
               SizedBox(height: MediaQuery.of(context).size.height / 23),
 
               ElevatedButtonWidget(
-                
                 text: "Login",
                 onpressed: () {
                   if (_formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Login successful!')),
-                    );
-                  Navigator.pushNamed(context, WrapperPage.id);
+                    final user = Provider.of<RegiseterController>(
+                      context,
+                      listen: false,
+                    ).findUserByEmail(_emailController.text.trim());
+
+                    if (user != null &&
+                        user.password == _passwordController.text.trim()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Login successful!')),
+                      );
+
+                      Navigator.pushNamed(context, WrapperPage.id);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Invalid email or password')),
+                      );
+                    }
                   }
                 },
               ),
 
               // here i try use DRY  and over Engineering principales
               SignupTextWidget(text: "Forgot Password?"),
-              SignupTextWidget(text: "Sign Up"),
+              SignupTextWidget(
+                text: "Sign Up",
+                ontap: () {
+                  Navigator.pushNamed(context, SignupPage.id);
+                },
+              ),
             ],
           ),
         ),

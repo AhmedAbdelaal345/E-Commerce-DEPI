@@ -6,15 +6,16 @@ class TextFormFieldWidget extends StatefulWidget {
     required this.controller,
     this.labelText = 'Email',
     this.hintText = 'Enter Your Email',
-
-    required this.ispassword,
+    required this.isEmail,
+    required this.isPassword,
   });
 
   final TextEditingController controller;
   final String labelText;
   final String hintText;
 
-  final bool ispassword;
+  final bool isPassword;
+  final bool isEmail;
 
   static const String standardEmailRegex =
       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
@@ -55,19 +56,34 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
     return null;
   }
 
+  String? _validatePhone(String? value) {
+    if (value == null || value.isEmpty) {
+      return "The Phone is required";
+    }
+    final phone = RegExp(r'^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$');
+    if (phone.hasMatch(value)) {
+      return "Please enter a valid Password address";
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: isShow,
       controller: widget.controller,
-      validator: widget.ispassword ? _validatePassword : _validateEmail,
+      validator: widget.isPassword
+          ? _validatePassword
+          : widget.isEmail
+          ? _validateEmail
+          : _validatePhone,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         labelText: widget.labelText,
         labelStyle: TextStyle(color: Colors.grey.shade500, fontSize: 16),
         hintText: widget.hintText,
         hintStyle: TextStyle(color: Colors.grey.shade400, fontSize: 14),
-        suffixIcon: widget.ispassword
+        suffixIcon: widget.isPassword
             ? IconButton(
                 onPressed: () {
                   isShow = !isShow;
