@@ -6,7 +6,8 @@ class ClothController extends ChangeNotifier {
   List<ClothesModel> _cartItems = [];
   List<ClothesModel> _wishList = [];
   List<ClothesModel> _selledItem = [];
-
+  List<ClothesModel> _filteredItems = [];
+  String _searchQuery = '';
   ClothController() {
     _items = ClothesModel.getRealClothesData();
     _wishList = _items.where((item) => item.isFavorite).toList();
@@ -16,6 +17,43 @@ class ClothController extends ChangeNotifier {
   List<ClothesModel> get items => _items;
   List<ClothesModel> get selledItem => _selledItem;
   List<ClothesModel> get cartItems => _cartItems;
+
+  List<ClothesModel> get searchItems =>
+      _searchQuery.isEmpty ? _items : _filteredItems;
+
+  
+  String get searchQuery => _searchQuery;
+
+  void setItems(List<ClothesModel> item) {
+    _items = item;
+    _filteredItems = item;
+    notifyListeners();
+  }
+
+  
+  void searchItemsMethod(String query) {
+    _searchQuery = query.toLowerCase().trim();
+
+    if (_searchQuery.isEmpty) {
+      _filteredItems = _items;
+    } else {
+      _filteredItems = _items.where((item) {
+       
+        return item.title?.toLowerCase().contains(_searchQuery) == true ||
+            item.desc?.toLowerCase().contains(_searchQuery) == true ||
+            item.id?.toLowerCase().contains(_searchQuery) == true;
+      }).toList();
+    }
+
+    notifyListeners();
+  }
+
+  // Method to clear search
+  void clearSearch() {
+    _searchQuery = '';
+    _filteredItems = _items;
+    notifyListeners();
+  }
 
   void toggleFavorite(ClothesModel item) {
     item.isFavorite = !item.isFavorite;

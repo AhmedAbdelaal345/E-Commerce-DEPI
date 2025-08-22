@@ -13,6 +13,7 @@ class Constants {
   static const String emptyImage = "assets/lottie/empty.json";
   static const String emptyCartImage = "assets/lottie/emptyCart.json";
   static const String emptyWishImage = "assets/lottie/emptywishList.json";
+  static const String searchImage = "assets/lottie/NotFound.json";
   static const Color scondaryTextColor = Color(0xff61758A);
   static const Color primaryBackgroundColor = Color(0xffFEFEFE);
   static const Color primarySearchColor = Color(0xffF0F2F5);

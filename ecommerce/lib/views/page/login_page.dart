@@ -25,76 +25,78 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Image.asset(
-                Constants.loginImage,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height / 3,
-              ),
-              Container(
-                margin: EdgeInsets.symmetric(vertical: 12),
-                child: Text(
-                  "Shop Smart",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Image.asset(
+                  Constants.loginImage,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: MediaQuery.of(context).size.height / 3,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 12),
+                  child: Text(
+                    "Shop Smart",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
-              ),
-              TextFormFieldWidget(
-                controller: _emailController,
-                isPassword: false,
-                isEmail: true,
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 23),
-              TextFormFieldWidget(
-                controller: _passwordController,
-                isPassword: true,
-                isEmail: false,
-                hintText: "Enter your Password",
-                labelText: "PassWord",
-              ),
-              SizedBox(height: MediaQuery.of(context).size.height / 23),
-
-              ElevatedButtonWidget(
-                text: "Login",
-                onpressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    final user = Provider.of<RegiseterController>(
-                      context,
-                      listen: false,
-                    ).findUserByEmail(_emailController.text.trim());
-
-                    if (user != null &&
-                        user.password == _passwordController.text.trim()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login successful!')),
-                      );
-
-                      Navigator.pushNamed(context, WrapperPage.id);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Invalid email or password')),
-                      );
+                TextFormFieldWidget(
+                  controller: _emailController,
+                  isPassword: false,
+                  isEmail: true,
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 23),
+                TextFormFieldWidget(
+                  controller: _passwordController,
+                  isPassword: true,
+                  isEmail: false,
+                  hintText: "Enter your Password",
+                  labelText: "PassWord",
+                ),
+                SizedBox(height: MediaQuery.of(context).size.height / 23),
+          
+                ElevatedButtonWidget(
+                  text: "Login",
+                  onpressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      final user = Provider.of<RegiseterController>(
+                        context,
+                        listen: false,
+                      ).findUserByEmail(_emailController.text.trim());
+          
+                      if (user != null &&
+                          user.password == _passwordController.text.trim()) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login successful!')),
+                        );
+          
+                        Navigator.pushNamed(context, WrapperPage.id);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Invalid email or password')),
+                        );
+                      }
                     }
-                  }
-                },
-              ),
-
-              // here i try use DRY  and over Engineering principales
-              SignupTextWidget(text: "Forgot Password?"),
-              SignupTextWidget(
-                text: "Sign Up",
-                ontap: () {
-                  Navigator.pushNamed(context, SignupPage.id);
-                },
-              ),
-            ],
+                  },
+                ),
+          
+                // here i try use DRY  and over Engineering principales
+                SignupTextWidget(text: "Forgot Password?"),
+                SignupTextWidget(
+                  text: "Sign Up",
+                  ontap: () {
+                    Navigator.pushNamed(context, SignupPage.id);
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
